@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/passwrd"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:onClick="enterpassword"
+        android:title="Enter Password"
+        app:showAsAction="ifRoom" />
+</menu>

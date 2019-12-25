@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="pu"
+            type="tk.kvakva.beeoptions.PassUserViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="tk.kvakva.beeoptions.MainActivity">
+
+
+        <EditText
+            android:id="@+id/UserNameET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="9031234567"
+            android:text="@={pu.beeUser}"
+            android:visibility="@{pu.showPassUserLayout ? View.VISIBLE : View.GONE}"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/PassWordET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="PassW0rd"
+            android:text="@={pu.beePass}"
+            android:visibility="@{pu.showPassUserLayout ? View.VISIBLE : View.GONE}"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/UserNameET" />
+
+        <EditText
+            android:id="@+id/TokenET"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={pu.beeTokn}"
+            android:visibility="@{pu.showPassUserLayout ? View.VISIBLE : View.GONE}"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/PassWordET"
+            tools:text="XXXXYYYY44445555" />
+
+        <CheckBox
+            android:id="@+id/SaveCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:checked="@={pu.saveToPref}"
+            android:text="Rememner password"
+
+            android:visibility="@{pu.showPassUserLayout ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/SetBT"
+            app:layout_constraintStart_toEndOf="@+id/SetBT"
+            app:layout_constraintTop_toTopOf="@+id/SetBT" />
+
+        <Button
+            android:id="@+id/SetBT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:onClick="@{() -> pu.onClinkGetBT()}"
+            android:text="Set"
+
+            android:visibility="@{pu.showPassUserLayout ? View.VISIBLE : View.GONE}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TokenET" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyViOp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/holo_green_dark"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/SetBT" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
