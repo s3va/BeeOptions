@@ -7,141 +7,89 @@
 
     <TextView
         android:id="@+id/nameTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:padding="2dp"
+        style="@style/onefulloptstl"
         android:text="name" />
 
     <TextView
         android:id="@+id/entityNameTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="2dp"
-        android:background="@android:color/holo_orange_light"
-
-        android:padding="2dp"
+        style="@style/onefulloptstl"
         android:text="entityName" />
 
     <TextView
         android:id="@+id/entityDescTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
-
+        style="@style/onefulloptstl"
         android:text="entityDesc" />
 
     <TextView
         android:id="@+id/rcRateTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+        style="@style/onefulloptstl"
+
 
         android:text="rcRate" />
 
     <TextView
         android:id="@+id/rcRatePeriodTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+
+        style="@style/onefulloptstl"
 
         android:text="rcRatePeriod" />
 
 
     <TextView
         android:id="@+id/rcRatePeriodTextTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+        style="@style/onefulloptstl"
 
         android:text="rcRatePeriodText" />
 
     <TextView
         android:id="@+id/categoryTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+        style="@style/onefulloptstl"
+
 
         android:text="category" />
 
     <TextView
         android:id="@+id/sdbSizeTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+
+        style="@style/onefulloptstl"
 
         android:text="sdbSize" />
 
     <TextView
         android:id="@+id/baseFeaturesTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+
+        style="@style/onefulloptstl"
 
         android:text="baseFeatures" />
 
     <TextView
         android:id="@+id/viewIndTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+        style="@style/onefulloptstl"
+
 
         android:text="viewInd" />
 
     <TextView
         android:id="@+id/removeIndTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+        style="@style/onefulloptstl"
 
         android:text="removeInd" />
 
     <TextView
         android:id="@+id/effDateTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+        style="@style/onefulloptstl"
 
         android:text="effDate" />
 
     <TextView
         android:id="@+id/expDateTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+        style="@style/onefulloptstl"
 
         android:text="expDate" />
 
     <TextView
         android:id="@+id/archiveIndTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="2dp"
-        android:background="@android:color/holo_orange_light"
-        android:layout_margin="2dp"
+        style="@style/onefulloptstl"
 
         android:text="archiveInd" />
 

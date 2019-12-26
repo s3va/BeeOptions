@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
                 title=getString(R.string.app_name) + " " + it.size.toString()
             }
         })
-
     }
 
     fun clka(view: View) {
@@ -65,6 +64,9 @@ class MainActivity : AppCompatActivity() {
             R.id.passwrd -> {
                 Log.d("M_MainActivity"," R.menu.bomenu -> {")
                 puvm.setShowPassUserLayout()
+            }
+            R.id.getOptFromBeeline -> {
+                puvm.onClinkGetBT()
             }
         }
     }

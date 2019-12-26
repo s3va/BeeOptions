@@ -2,6 +2,7 @@ package tk.kvakva.beeoptions
 
 import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -21,6 +22,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 
 const val SECRETPREFFFN = "secret_shared_prefs"
@@ -45,7 +48,7 @@ class PassUserViewModel(application: Application) : AndroidViewModel(application
         get() = _showPassUserLayout
 
     fun setShowPassUserLayout() {
-        _showPassUserLayout.value = !(showPassUserLayout.value?:false)
+        _showPassUserLayout.value = !(showPassUserLayout.value ?: false)
     }
 
     var saveToPref = MutableLiveData<Boolean>()
@@ -67,6 +70,8 @@ class PassUserViewModel(application: Application) : AndroidViewModel(application
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
+    val contxt = application.applicationContext
+
     init {
         Log.d(
             "M_PassUserViewModel",
@@ -83,7 +88,7 @@ class PassUserViewModel(application: Application) : AndroidViewModel(application
             _showPassUserLayout.value = true
         } else {
             if (ex_satp) {
-                saveToPref.value = sharedPreferences.getBoolean(SAVETOPREF,true)
+                saveToPref.value = sharedPreferences.getBoolean(SAVETOPREF, true)
                 beePass.value = sharedPreferences.getString(BEEPASS, "")
                 beeUser.value = sharedPreferences.getString(BEEUSER, "")
                 beeTokn.value = sharedPreferences.getString(BEETOKN, "")
@@ -115,47 +120,53 @@ class PassUserViewModel(application: Application) : AndroidViewModel(application
             )
             return
         }
-        val beelineToken = BeelineApi.retrofitService.getBeeToken(beeUser.value!!, beePass.value!!)
 
-        if (beelineToken.meta.status == "OK") {
-            Log.d("M_PassUserViewModel", "!!!!!!!!!!!!!!!! TOKENTT ${beelineToken.token}")
+        val beelineToken: BeelineToken? = try {
+            BeelineApi.retrofitService.getBeeToken(beeUser.value!!, beePass.value!!)
 
-            val beeOptionsData = BeelineApi.retrofitService.getBeeOptions(beeUser.value!!,beelineToken.token)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            when (e) {
+                is SocketTimeoutException ->
+                    Toast.makeText(contxt, "NETWORK TIME OUT!!!!", Toast.LENGTH_LONG).show()
+                is UnknownHostException ->
+                    Toast.makeText(contxt, "UnknownHostException!!!! ", Toast.LENGTH_LONG).show()
+            }
+            null
+        }
 
-            data.value=beeOptionsData.services.toList()
+        if ((beelineToken?.meta?.status == "OK") and !beelineToken?.token.isNullOrBlank()) {
+            Log.d("M_PassUserViewModel", "!!!!!!!!!!!!!!!! TOKENTT ${beelineToken?.token}")
 
+            val beeOptionsData =
+                BeelineApi.retrofitService.getBeeOptions(beeUser.value!!, beelineToken?.token!!)
 
-            /*val client = OkHttpClient.Builder()
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .writeTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .callTimeout(10, TimeUnit.SECONDS)
-                .addInterceptor(
-                    HttpLoggingInterceptor().apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    }
-                )
-                .build()*/
+            if (beeOptionsData.meta.status == "OK")
+                data.value = beeOptionsData.services?.toList()
+            else
+                Toast.makeText(contxt, "Cannot get options from beeline", Toast.LENGTH_LONG).show()
 
-            /*val request = Request.Builder()
-                //.url(BASEURL + "auth?login=" + beeUser.value + "&password=" + beePass.value)
-                .url(BASEURL + "info/serviceList?ctn=" + beeUser.value + "&token=" + beelineToken.token)
-                .build()*/
-
-            /*withContext(Dispatchers.IO) {
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                    for ((name, value) in response.headers) {
-                        println("$name: $value")
-                    }
-
-                    val s = response.body?.string()
-
-                    Log.d("M_PassUserViewModel", "BODY.STRING: $s")
-                }
-            }*/
             return
+        } else if (beelineToken?.meta?.message == "AUTH_ERROR") {
+            Log.d(
+                "M_PassUserViewModel",
+                " Toast.makeText(contxt,AUTH_ERROR: login (phone number) or password is wrong,Toast.LENGTH_LONG).show()"
+            )
+            Toast.makeText(
+                contxt,
+                "AUTH_ERROR: login (phone number) or password is wrong",
+                Toast.LENGTH_LONG
+            ).show()
+        } else if (beelineToken?.meta?.message?.contains("LOGIN_TRY_NUMBER_EXCEED") == true) {
+            Log.d(
+                "M_PassUserViewModel",
+                " Toast.makeText(contxt,AUTH_ERROR: login (phone number) or password is wrong,Toast.LENGTH_LONG).show()"
+            )
+            Toast.makeText(
+                contxt,
+                beelineToken.meta.message,
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -180,9 +191,12 @@ class PassUserViewModel(application: Application) : AndroidViewModel(application
                 remove(BEETOKN)
             }
         _showPassUserLayout.value = false
+
         viewModelScope.launch {
             getTokenFromBee()
         }
+
+
     }
 
 }
@@ -192,7 +206,7 @@ data class BeelineToken(
     @Json(name = "meta")
     val meta: Meta,
     @Json(name = "token")
-    val token: String
+    val token: String?
 ) {
     @JsonClass(generateAdapter = true)
     data class Meta(
@@ -228,12 +242,7 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface BeelineApiService {
-    /**
-     * Returns a Coroutine [Deferred] [List] of [MarsProperty] which can be fetched with await() if
-     * in a Coroutine scope.
-     * The @GET annotation indicates that the "realestate" endpoint will be requested with the GET
-     * HTTP method
-     */
+
     @GET("auth")
     suspend fun getBeeToken(@Query("login") number: String, @Query("password") password: String):
     // The Coroutine Call Adapter allows us to return a Deferred, a Job with a result
@@ -253,7 +262,7 @@ data class BeeOptionsData(
     @Json(name = "meta")
     val meta: Meta,
     @Json(name = "services")
-    val services: List<Service>
+    val services: List<Service>?
 ) {
     @JsonClass(generateAdapter = true)
     data class Meta(

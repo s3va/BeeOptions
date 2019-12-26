@@ -8,4 +8,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="onefulloptstl">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">2dp</item>
+        <item name="android:background">#0B2B02</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
 </resources>

@@ -100,10 +100,12 @@ class OptionRecyViewAdap : RecyclerView.Adapter<OptionRecyViewAdap.ViewHolder>()
             val sb = StringBuilder()
             item.baseFeatures.forEach {
                 sb.append(it.code)
-                sb.append(",")
+                sb.append(", ")
             }
-            if (item.baseFeatures.isNotEmpty())
+            if (item.baseFeatures.isNotEmpty()) {
                 sb.deleteCharAt(sb.lastIndex)
+                sb.deleteCharAt(sb.lastIndex)
+            }
             Log.d("M_ViewHolder", "baseFeatures ${item.baseFeatures} $sb")
             baseFtch.text = sb
             nameTV.setOnLongClickListener {
@@ -129,16 +131,16 @@ class OptionRecyViewAdap : RecyclerView.Adapter<OptionRecyViewAdap.ViewHolder>()
                 pupv.findViewById<TextView>(R.id.effDateTextView2).text = "effDate: ${item.effDate}"
                 pupv.findViewById<TextView>(R.id.archiveIndTextView2).text =
                     "archiveInd: ${item.archiveInd}"
-                val sb = StringBuilder("codes: ")
+                val sbl = StringBuilder("codes: ")
                 item.baseFeatures.forEach {
-                    sb.append(it.code)
-                    sb.append(", ")
+                    sbl.append(it.code)
+                    sbl.append(", ")
                 }
                 if (item.baseFeatures.isNotEmpty()) {
-                    sb.deleteCharAt(sb.lastIndex)
-                    sb.deleteCharAt(sb.lastIndex)
+                    sbl.deleteCharAt(sbl.lastIndex)
+                    sbl.deleteCharAt(sbl.lastIndex)
                 }
-                pupv.findViewById<TextView>(R.id.baseFeaturesTextView2).text = "baseFeatures: $sb"
+                pupv.findViewById<TextView>(R.id.baseFeaturesTextView2).text = "baseFeatures: $sbl"
 
                 val pupw = PopupWindow(
                     pupv,
