@@ -3,4 +3,5 @@
     <string name="rememner_password">Rememner password</string>
     <string name="enter_password">Enter Password</string>
     <string name="refresh_data">refresh data</string>
+    <string name="search_hint">string to find</string>
 </resources>

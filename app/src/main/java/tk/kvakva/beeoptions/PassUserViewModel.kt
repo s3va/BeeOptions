@@ -60,6 +60,7 @@ class PassUserViewModel(application: Application) : AndroidViewModel(application
     var beeTokn = MutableLiveData<String>()
 
     var data = MutableLiveData<List<BeeOptionsData.Service>>()
+    var databu = MutableLiveData<List<BeeOptionsData.Service>>()
 
     val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
     val sharedPreferences = EncryptedSharedPreferences.create(
@@ -141,8 +142,10 @@ class PassUserViewModel(application: Application) : AndroidViewModel(application
             val beeOptionsData =
                 BeelineApi.retrofitService.getBeeOptions(beeUser.value!!, beelineToken?.token!!)
 
-            if (beeOptionsData.meta.status == "OK")
+            if (beeOptionsData.meta.status == "OK") {
                 data.value = beeOptionsData.services?.toList()
+                databu.value = beeOptionsData.services?.toList()
+            }
             else
                 Toast.makeText(contxt, "Cannot get options from beeline", Toast.LENGTH_LONG).show()
 
