@@ -36,12 +36,12 @@ class MainActivity : AppCompatActivity() {
         val adaptr = OptionRecyViewAdap()
         binding.RecyViOp.adapter = adaptr
 
-        puvm.data.observe(this, Observer {
+        puvm.data.observe(this) {
             it?.let {
                 adaptr.data = it
                 title = getString(R.string.app_name) + " " + it.size.toString()
             }
-        })
+        }
     }
 
     fun clka(view: View) {
@@ -158,14 +158,14 @@ class MainActivity : AppCompatActivity() {
                     }
                     val filtl = mutableListOf<BeeOptionsData.Service>()
                     puvm.databu.value?.forEach {
-                        if (it.name.toLowerCase(Locale.getDefault()).contains(
-                                newText.orEmpty().toLowerCase(
+                        if (it.name.lowercase(Locale.getDefault()).contains(
+                                newText.orEmpty().lowercase(
                                     Locale.getDefault()
                                 )
-                            ) or it.entityDesc?.toLowerCase(Locale.getDefault()).orEmpty().contains(
-                                newText.orEmpty().toLowerCase(Locale.getDefault())
-                            ) or it.entityName.toLowerCase(Locale.getDefault()).contains(
-                                newText.orEmpty().toLowerCase(Locale.getDefault())
+                            ) or it.entityDesc?.lowercase(Locale.getDefault()).orEmpty().contains(
+                                newText.orEmpty().lowercase(Locale.getDefault())
+                            ) or it.entityName.lowercase(Locale.getDefault()).contains(
+                                newText.orEmpty().lowercase(Locale.getDefault())
                             )
                         )
                             filtl.add(it)
